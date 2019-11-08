@@ -1,0 +1,275 @@
+#main {
+  width: 100%;
+  height: 100%;
+  color: white;
+  background-color: white;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  overflow: scroll;
+  background-image: url('/static/back.jpg');
+  background-position-y: 1342px;
+  max-width: 800px;
+}
+
+#main-back2 {
+  background-image: url('/static/back.jpg');
+  background-position-y: 0px;
+}
+
+.main {
+  width: 100%;
+  height: 80%;
+  color: white;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  overflow: scroll;
+}
+
+.chat-box {
+  margin-top: 1rem;
+}
+
+.chat-box>.left,
+.right {
+  display: flex;
+}
+
+.right {
+  margin-top: 1rem;
+}
+
+.chat-left,
+.chat-right-item-left {
+  width: 3rem;
+  /* background: #2C3E50; */
+  position: relative;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+}
+
+.chat-right-item-left {
+  border: 1px solid black;
+}
+
+.chat-right,
+.chat-right-item-right {
+  width: calc(90% - 0.3rem);
+  /* background-color: red; */
+  position: relative;
+}
+
+.chat-right {
+  margin-right: 0.5rem;
+}
+
+.chat-left-head {
+  position: absolute;
+  top: 0;
+  width: 3rem;
+  height: 3rem;
+  background-color: blue;
+}
+
+.chat-right-item {
+  margin-bottom: 1rem;
+  display: flex;
+  line-height: 3rem;
+  background-color: white;
+  color: black;
+}
+
+.chat-right-item-right {
+  text-align: left;
+  word-wrap: break-word;
+}
+
+.text-tips {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.chat-right-item-left {
+  width: 3rem;
+  height: 3rem;
+  line-height: 3rem;
+}
+
+.chat-right-item-question {
+  text-align: left;
+  word-wrap: break-word;
+  line-height: 1.3rem;
+  vertical-align: middle;
+  margin-left: 0.5rem;
+  padding-left: 2.2rem;
+  position: relative;
+  margin-bottom: 1rem;
+  width: 90%;
+  border: 1px solid black;
+  padding-top: 0.3rem;
+  padding-bottom: 0.3rem;
+  padding-right: 0.3rem;
+  background-color: white;
+  color: black;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.chat-right-item-question-right {
+  text-align: left;
+  word-wrap: break-word;
+  line-height: 1.3rem;
+  vertical-align: middle;
+  margin-right: 0.5rem;
+  padding-right: 0.3rem;
+  position: relative;
+  margin-bottom: 1rem;
+  width: 90%;
+  border: 1px solid black;
+  padding-top: 0.3rem;
+  padding-bottom: 0.3rem;
+  padding-left: 2.2rem;
+  background-color: white;
+  color: black;
+  border-radius: 2px;
+  float: right;
+}
+
+.chat-right-item-question-icon {
+  position: absolute;
+  top: -10px;
+  left: 0;
+  width: 2rem;
+  height: 2rem;
+  line-height: 2rem;
+  text-align: center;
+  border-radius: 50%;
+  background-color: yellow;
+  color: black;
+  font-size: 1.5rem;
+}
+
+.start-text {
+  display: inline-block;
+  padding: 0 0.5rem;
+  background: #FFFF00;
+  color: black;
+  text-align: center;
+  height: 2rem;
+  line-height: 2rem;
+}
+
+.chat-right-item-question-right-me {
+  display: inline-block;
+  width: auto;
+  padding: 0.3rem;
+  text-align: left;
+  word-wrap: break-word;
+  line-height: 1.3rem;
+  vertical-align: middle;
+  margin-right: 0.5rem;
+  padding-right: 0.3rem;
+  position: relative;
+  margin-bottom: 1rem;
+  border: 1px solid black;
+  background-color: white;
+  color: black;
+  border-radius: 2px;
+  float: right;
+}
+.animate-box-main2{
+  position: fixed;
+  left:0;
+  bottom:3rem;
+  width: 40%;
+  height: 3rem;
+  background-color: red;
+}
+.animate-box-main3{
+  position: fixed;
+  right:0;
+  bottom:3rem;
+  width: 40%;
+  height: 3rem;
+  background-color: red;
+}
+.animate-box-2{
+  /* position: absolute; */
+  width: 3rem;
+  height: 2rem;
+  margin-left: 3rem;
+  background-color: black;
+  animation: move 2s infinite alternate linear;
+}
+.animate-box-3{
+  /* position: absolute; */
+  width: 3rem;
+  height: 2rem;
+  margin-left: 3rem;
+  background-color: black;
+  animation: move 2s infinite alternate linear;
+}
+.animate-box-3{
+  /* position: absolute; */
+  width: 3rem;
+  height: 2rem;
+  margin-right: 2rem;
+  background-color: black;
+  animation: move3 2s infinite alternate linear;
+}
+@keyframes move{
+  0%{
+    transform: rotate(-10deg);
+  }
+  33.33%{
+    transform: rotate(0deg);
+  }
+  66.66%{
+    transform: rotate(10deg);
+  }
+  100%{
+    transform: rotate(20deg);
+  }
+
+}
+@keyframes move3{
+  0%{
+    transform: translateY(0);
+  }
+  33.33%{
+    transform: translateY(0.5rem);
+  }
+  66.66%{
+    transform: translateY(1rem);
+  }
+  100%{
+    transform: translateY(1.5rem);
+  }
+
+}
+.get-my-report-btn-box{
+  position: absolute;
+  bottom:4rem;
+  left:0; right:0;
+  margin:auto;
+}
+.get-my-report-btn{
+  width: -webkit-fit-content;
+  padding: 0.3rem;
+  background-color: black;
+  display: inline-block;
+  margin: 0 auto;
+}
+.canvas-box{
+  width: 100%;
+  height: 100%;
+}
+#can{
+  width: 100%;
+  height: 100%;
+}
