@@ -141,6 +141,7 @@
     <!-- 生成我的报告 -->
     <!-- canvas -->
     <div class="canvas-box">
+      <canvas id="can" width="414" height="736"></canvas>
       <img :src="imgSrc" alt="" style="width:100%;">
     </div>
     <!-- canvas -->
@@ -163,7 +164,13 @@
         hideQuestion:false,
         imgComplte:false,
         canvasInfo: {
-          blankWidth: 30
+          blankWidth: 50,
+          fontSize:40,
+          fsForXg:50,
+          fsForRes:60,
+          fsForAn:70,
+          fsForArt:35,
+          topHeight:30
         },
         canvas: new Object(),
         dpr: 1,
@@ -206,7 +213,8 @@
     },
     mounted: function() {
       var that = this
-      // this.startReportEvent()
+      this.startReportEvent()
+      console.log(this.getWindowInfo())
       this.$axios.get('/static/question.json').then((response) => {
         that.questionList = response.data
         for (var i = 0; i < that.questionList.length; i++) {
@@ -234,9 +242,13 @@
         windowInfo.dpr = window.devicePixelRatio;
         if (window.innerWidth) {
           windowInfo.width = window.innerWidth;
+          windowInfo.height = window.innerHeight;
         } else {
           windowInfo.width = document.body.clientWidth;
+          windowInfo.height = document.body.clientHeight;
         }
+        windowInfo.width = 414*2
+        windowInfo.height = 736*2
         return windowInfo;
       },
       startQuestion() {
@@ -288,17 +300,19 @@
       },
       startReportEvent() {
         // this.startReport = !this.startReport
-        var canvas = document.createElement("canvas");
-        // var canvas = document.getElementById('can');
+        // var canvas = document.createElement("canvas");
+        var canvas = document.getElementById('can');
         var ctx = canvas.getContext("2d");
         var clientWidth = this.getWindowInfo().width; //获取屏幕宽度用于canvas宽度自适应移动端屏幕
+        var clientHeight = this.getWindowInfo().height;
         var dpr = this.getWindowInfo().dpr;
         this.canvas = canvas
         this.dpr = dpr
         this.ctx = ctx
         ctx.globalCompositeOperation = "source-atop"; //** 坑锯齿感觉没什么用不知道是不是用错地方了 **
         canvas.width = dpr * clientWidth; //由于手机屏幕时retina屏，都会多倍渲染，用dpr来动态设置画布宽高，避免图片模糊
-        canvas.height = dpr * clientWidth * 609 / 375;
+        // canvas.height = dpr * clientWidth * 609 / 375;
+        canvas.height = dpr * clientHeight
         ctx.fillStyle = 'white'
         ctx.fillRect(0,0,canvas.width,canvas.height)
         this.canvasRect(canvas, ctx, dpr);
@@ -329,13 +343,13 @@
         var dpr = this.dpr
         var ctx = this.ctx
         //获取起点位置
-        var nameStartX = this.rectInfo.rectStartX + (20 * dpr)
-        var nameStartY = this.rectInfo.rectStartY + (30 * dpr)
+        var nameStartX = this.rectInfo.rectStartX + (20 * dpr) + this.canvasInfo.fontSize * dpr
+        var nameStartY = this.rectInfo.rectStartY + (30 * dpr) + this.canvasInfo.fontSize * dpr
         this.userNameInfo = {
           startX: nameStartX,
           startY: nameStartY
         }
-        ctx.font = 20 * dpr + 'px Arial'
+        ctx.font = this.canvasInfo.fontSize * dpr + 'px Arial'
         ctx.fillStyle = "#0094ff";
         ctx.textAlign = 'left';
         ctx.fillText("流言蜚语", nameStartX, nameStartY);
@@ -347,20 +361,28 @@
         var dpr = this.dpr
         var ctx = this.ctx
         var text = "我是一个：好人";
+        var fontSize = this.canvasInfo.fsForXg
+        var top = fontSize +this.canvasInfo.topHeight
         //文字,文字大小,文字间距,距离上高度,上一个定位的元素,当前定位元素
-        this.drawText(text, 18, 0, 30, 'userNameInfo', 'xgInfo')
+        this.drawText(text, fontSize, 0, top, 'userNameInfo', 'xgInfo')
         this.drawResultText()
       },
       //绘制结果文字
       drawResultText() {
         var text = this.resultText.rText
-        this.drawText(text, 32, 10, 60, 'xgInfo', 'rInfo')
+        var fontSize = this.canvasInfo.fsForRes
+        var top = fontSize + this.canvasInfo.topHeight
+        top = top * 0.9
+        this.drawText(text, fontSize, 10, top, 'xgInfo', 'rInfo')
         this.drawAnimalText()
 
       },
       drawAnimalText() {
         var text = this.resultText.aText
-        this.drawText(text, 60, 15, 80, 'rInfo', 'aInfo')
+        var fontSize = this.canvasInfo.fsForAn
+        var top = fontSize + this.canvasInfo.topHeight
+        top = top * 1
+        this.drawText(text, fontSize, 15, top, 'rInfo', 'aInfo')
         //开始载入考拉图片
         this.drawKl()
       },
@@ -376,13 +398,14 @@
         var ctx = this.ctx
         //获取起点位置
         var aStartX = canvas.width - this.aImg.width - 10 * dpr
-        var aStartY = Y + H + 25*dpr
+        var aStartY = H
         // console.log(this.aImg.width +'---aStartx')
         this.article = {
           startX: aStartX,
           startY: aStartY
         }
-        ctx.font = 15 * dpr + 'px Arial'
+        var fontSize = this.canvasInfo.fsForArt
+        ctx.font = fontSize * dpr + 'px Arial'
         ctx.fillStyle = "#0094ff";
         ctx.textAlign = 'center';
         //设置文字间距
@@ -395,13 +418,13 @@
           allTextWidth += ctx.measureText(text[i]).width;
         }
         // 字符串长度大于画布区域要换行
-        if (allTextWidth > canvas.width - this.aImg.width - this.canvasInfo.blankWidth*dpr) {
+        if (allTextWidth > canvas.width - this.aImg.width - this.canvasInfo.blankWidth*2*dpr) {
           for (var i = 0; i < text.length; i++) {
             lineWidth += ctx.measureText(text[i]).width;
-            if (lineWidth > canvas.width - this.aImg.width - this.canvasInfo.blankWidth*dpr -20*dpr) {
+            if (lineWidth > canvas.width - this.aImg.width - this.canvasInfo.blankWidth*2*dpr) {
               ctx.textAlign = 'left';
               ctx.fillText(text.substring(lastSubStrIndex, i), aStartX, aStartY);
-              aStartY += dpr * 20; //设置行高
+              aStartY += dpr * that.canvasInfo.fsForArt + 5*dpr; //设置行高
               lineWidth = 0;
               lastSubStrIndex = i;
             }
@@ -426,9 +449,9 @@
         var img = new Image();
         img.src = "/static/1.jpeg";
         img.onload = function() {
-          var imgWidth = img.width * dpr
-          var imgHeight = img.height * dpr
-          var imgStartX = canvas.width - imgWidth - (100 * dpr)
+          var imgWidth = img.width * dpr *2
+          var imgHeight = img.height * dpr *2
+          var imgStartX = canvas.width - imgWidth - (140 * dpr)
           var imgStartY = 80 * dpr
           ctx.drawImage(img, imgStartX, imgStartY, imgWidth * 0.6, imgHeight * 0.6);
           // this.drawCanvasUserImg(canvas, ctx, dpr);
@@ -436,13 +459,13 @@
         var img2 = new Image();
         img2.src = "/static/2.jpg";
         img2.onload = function() {
-          var img2Width = img2.width * dpr
-          var img2Height = img2.height * dpr
+          var img2Width = img2.width * dpr *2
+          var img2Height = img2.height * dpr * 2
           // console.log(img2Height)
           var img2StartX = canvas.width - img2Width - (40 * dpr)
-          var img2StartY = 200 * dpr
+          var img2StartY = img.height*dpr + 30 * dpr
           ctx.drawImage(img2, img2StartX, img2StartY, img2Width * 0.6, img2Height * 0.6);
-          that.drawArticle(img2StartY,img2Height*0.6)
+          that.drawArticle(that.aImg.width+10,(that.canvas.height - that.aImg.height + that.canvasInfo.blankWidth*dpr))
         }
 
       },
@@ -455,10 +478,10 @@
         var img3 = new Image();
         img3.src = "/static/qrcod.jpeg";
         img3.onload = function() {
-          var img3Width = (canvas.width - that.aImg.width - that.canvasInfo.blankWidth)*0.5
+          var img3Width = (canvas.width - that.aImg.width - that.canvasInfo.blankWidth*dpr)*0.3
           var img3Height = img3Width
-          var img3StartX = (canvas.width - that.aImg.width - that.canvasInfo.blankWidth - img3Width)/2 + that.aImg.width -10*dpr
-          var img3StartY = canvas.height - img3Width - that.canvasInfo.blankWidth - 50*dpr
+          var img3StartX = (canvas.width - that.canvasInfo.blankWidth*dpr) - img3Width -20*dpr
+          var img3StartY = canvas.height - img3Width - that.canvasInfo.blankWidth*dpr - 20*dpr
           ctx.drawImage(img3, img3StartX, img3StartY, img3Width, img3Height);
           that.convertCanvasToImage(canvas);
         }
@@ -508,8 +531,8 @@
         var img = new Image();
         img.src = "/static/kl.jpeg";
         img.onload = function() {
-          var imgWidth = img.width * dpr
-          var imgHeight = img.height * dpr
+          var imgWidth = img.width * dpr *2
+          var imgHeight = img.height * dpr*2
           that.aImg.width = imgWidth
           that.aImg.height = imgHeight
           var imgStartY = canvas.height - imgHeight
