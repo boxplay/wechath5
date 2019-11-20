@@ -5,7 +5,9 @@ import App from './App'
 import router from './router'
 Vue.prototype.$axios = axios
 Vue.config.productionTip = false
-
+import ViewUI from 'view-design';
+import 'view-design/dist/styles/iview.css';
+Vue.use(ViewUI);
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

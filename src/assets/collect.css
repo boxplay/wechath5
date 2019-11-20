@@ -1,0 +1,10 @@
+.leftBoxItem{
+  text-align: left;
+}
+.leftBoxItem label{
+  margin-bottom:1rem;
+}
+.formBox{
+  width: 95%;
+  margin: 0 auto;
+}

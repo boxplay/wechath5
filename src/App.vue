@@ -7,6 +7,7 @@
 <script>
   export default {
     name: 'App'
+
   }
 </script>
 
@@ -18,7 +19,7 @@
   }
 
   html {
-    background-color: lightGray;
+    background-color: white;
   }
 
   #app {
@@ -27,6 +28,11 @@
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
     color: #2c3e50;
+    position: absolute;
+    left:0;
+    right: 0;
+    top:0;
+    height: 100%;
   }
 
   div {

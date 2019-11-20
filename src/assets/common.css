@@ -1,0 +1,20 @@
+.tipsTetx{
+  width: 100%;
+  text-align: center;
+  height: 2rem;
+  line-height: 2rem;
+}
+.videoBox{
+  width: 50%;
+  margin:0 auto;
+  border:1px solid black;
+  height: 6rem;
+}
+.nextBox{
+  margin-top: 3rem;
+}
+.tipsBox{
+  width: 80%;
+  margin:0 auto;
+  padding: 1rem;
+}

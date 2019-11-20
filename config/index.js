@@ -10,7 +10,15 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
+    proxyTable: {
+      '/getip': {
+        target: 'http://mac.ngrok.wdevelop.cn/', // 设置你调用的接口域名和端口号
+        changeOrigin: true,     // 跨域
+        pathRewrite: {
+                '^/getip': '/getIp.php'
+            }
+      }
+    },
 
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST
@@ -20,13 +28,13 @@ module.exports = {
     notifyOnErrors: true,
     poll: false, // https://webpack.js.org/configuration/dev-server/#devserver-watchoptions-
 
-    
+
     /**
      * Source Maps
      */
 
     // https://webpack.js.org/configuration/devtool/#development
-    devtool: 'source-map',
+    devtool: 'eval',
 
     // If you have problems debugging vue-files in devtools,
     // set this to false - it *may* help
