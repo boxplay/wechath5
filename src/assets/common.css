@@ -1,20 +1,13 @@
-.tipsTetx{
-  width: 100%;
-  text-align: center;
-  height: 2rem;
-  line-height: 2rem;
+.uploadTopBox {
+  position: absolute;
+  left: 50%;
+  margin-left: -400px;
+  top: 20%;
+  width: 800px;
 }
-.videoBox{
-  width: 50%;
-  margin:0 auto;
-  border:1px solid black;
-  height: 6rem;
-}
-.nextBox{
-  margin-top: 3rem;
-}
-.tipsBox{
-  width: 80%;
-  margin:0 auto;
-  padding: 1rem;
+
+.uploadBox-cut {
+  width: 700px;
+  height: 500px;
+  margin: 30px auto;
 }

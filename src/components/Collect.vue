@@ -6,8 +6,8 @@
         <!--  <Select v-model="product_type" placeholder="请选择产品类型">
             <Option v-for="item in productList" :value="item.value" :key="item.value">{{ item.label }}</Option>
           </Select> -->
-          <RadioGroup v-model="product_type">
-                <Radio v-for="item in productList" :label="item.label" :key="item.value" border>{{item.label}}</Radio>
+          <RadioGroup v-model="product_type" on-change="changeType">
+                <Radio v-for="item in productList" :label="item.value" :key="item.value" border>{{item.label}}</Radio>
             </RadioGroup>
         </FormItem>
         <FormItem label="姓名">
@@ -25,12 +25,12 @@
         <div v-if="product_type != 'wx'">
           <FormItem label="累计用户数量" class="leftBoxItem">
             <RadioGroup v-model="formData.allCount">
-              <Radio border :label="item.label" v-for="item in allCountType" :key="item.value"></Radio>
+              <Radio border :label="item.value" v-for="item in allCountType" :key="item.value">{{item.label}}</Radio>
             </RadioGroup>
           </FormItem>
           <FormItem label="日活用户" class="leftBoxItem">
             <RadioGroup v-model="formData.dayActiveCount">
-              <Radio border :label="item.label" v-for="item in dayActiveCountType" :key="item.value"></Radio>
+              <Radio border :label="item.value" v-for="item in dayActiveCountType" :key="item.value">{{item.label}}</Radio>
             </RadioGroup>
           </FormItem>
         </div>
@@ -38,18 +38,18 @@
         <div v-if="product_type == 'wx'" class="leftBoxItem">
           <FormItem label="粉丝数量">
             <RadioGroup v-model="formData.subCountForwx">
-              <Radio border :label="item.label" v-for="item in subCountForwxType" :key="item.value"></Radio>
+              <Radio border :label="item.value" v-for="item in subCountForwxType" :key="item.value">{{item.label}}</Radio>
             </RadioGroup>
           </FormItem>
           <FormItem label="更新频率">
             <RadioGroup v-model="formData.upadateRate">
-              <Radio border :label="item.label" v-for="item in upadateRateType" :key="item.value"></Radio>
+              <Radio border :label="item.value" v-for="item in upadateRateType" :key="item.value">{{item.label}}</Radio>
             </RadioGroup>
           </FormItem>
         </div>
         <div>
             <div class="nextBox">
-              <Button type="success">提交信息</Button>
+              <Button type="success" @click="subInfo">提交信息</Button>
             </div>
         </div>
         <!-- 公众号 -->
@@ -176,7 +176,9 @@
       var that = this
     },
     methods: {
-
+        subInfo(){
+          console.log(this.formData)
+        }
     }
   }
 </script>

@@ -10,8 +10,10 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "qs": "^6.9.1",
     "view-design": "^4.0.2",
     "vue": "^2.5.2",
+    "vue-cropper": "^0.4.9",
     "vue-router": "^3.0.1"
   },
   "devDependencies": {

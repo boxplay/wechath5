@@ -17,6 +17,13 @@ module.exports = {
         pathRewrite: {
                 '^/getip': '/getIp.php'
             }
+      },
+      '/upload': {
+        target: 'http://mac.ngrok.wdevelop.cn/back/', // 设置你调用的接口域名和端口号
+        changeOrigin: true,     // 跨域
+        pathRewrite: {
+                '^/upload': '/upload/upload-image'
+            }
       }
     },
 
