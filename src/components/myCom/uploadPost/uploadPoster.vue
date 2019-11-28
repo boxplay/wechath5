@@ -117,14 +117,9 @@
             var data = {
               'imgData': data
             }
-            data = qs.stringify(data)
-            this.$axios.post('/upload', data, {
-              headers: {
-                'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
-              }
-            }).then((res) => {
-              console.log(res.data.data.url)
-              that.$emit('getImgUrl',{'url':res.data.data.url,'type':that.type})
+            that.$http.uploadImg(data).then((res) => {
+              console.log(res.url)
+              that.$emit('getImgUrl',{'url':res.url,'type':that.type})
             })
           })
         }
@@ -152,6 +147,7 @@
     margin-left: -400px;
     top: 20%;
     width: 800px;
+    z-index:200;
   }
 
   .uploadBox-cut {

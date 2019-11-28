@@ -29,9 +29,9 @@
     text-align: center;
     color: #2c3e50;
     position: absolute;
-    left:0;
+    left: 0;
     right: 0;
-    top:0;
+    top: 0;
     height: 100%;
   }
 
@@ -62,5 +62,12 @@
   ::-webkit-scrollbar {
     width: 0 !important;
     height: 0;
+  }
+
+  .ivu-input {
+    border: none !important;
+    height: 2.4rem;
+    font-size: 1rem;
+    text-align: center;
   }
 </style>

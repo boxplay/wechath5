@@ -57,3 +57,51 @@
 .ivu-col {
   transition: width .2s ease-in-out;
 }
+
+.add-split {
+  min-height: 200px;
+  height: 200px;
+  border: 1px solid #dcdee2;
+}
+
+.add-split-pane {
+  padding: 10px;
+  height: 200px;
+}
+.add-tips-box{
+  height: 100px;
+}
+.add-form-box{
+  display: block;
+  /* max-width: 800px; */
+  width: 100%;
+  box-sizing: border-box;
+  border:2px solid black;
+}
+.add-poster-box{
+  position: relative;
+}
+.posterImgButton{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top:0;
+  opacity: 0;
+  left:0;
+  right: 0;
+}
+.add-model-input-box{
+  margin-bottom: 1rem;
+}
+.posterImgButton>.ivu-upload-select{
+  width: 100%;
+  height: 100%;
+}
+.add-model-input-box > .add-input{
+  width: 80%;
+  margin: 0 auto;
+  border-radius: 0;
+  border:0;
+  border-bottom: 2px solid black;
+  margin-bottom: 1rem;
+}
