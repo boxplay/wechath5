@@ -60,13 +60,14 @@
 
 .add-split {
   min-height: 200px;
-  height: 200px;
+  height: 100%;
   border: 1px solid #dcdee2;
 }
 
 .add-split-pane {
   padding: 10px;
-  height: 200px;
+  height: 100%;
+  overflow: scroll;
 }
 .add-tips-box{
   height: 100px;
@@ -77,6 +78,7 @@
   width: 100%;
   box-sizing: border-box;
   border:2px solid black;
+      margin-bottom: 10rem;
 }
 .add-poster-box{
   position: relative;
@@ -104,4 +106,43 @@
   border:0;
   border-bottom: 2px solid black;
   margin-bottom: 1rem;
+}
+.add-founder-desc{
+  padding: 0.5rem;
+  overflow: hidden;
+}
+.add-founder-box{
+  width: 90%;
+  margin: 0 auto;
+}
+.add-founder-name{
+  text-align: left;
+  font-size: 1.3rem;
+  font-weight: 300;
+  margin-bottom: 1rem;
+}
+.add-founder-head-desc{
+  display: flex;
+}
+.add-founder-head,.add-founder-desc{
+  border:1px solid black;
+  min-height: 100px;
+  min-width: 100px;
+  margin: 1rem;
+}
+.add-founder-head{
+  height: 100px;
+  width: 100px;
+}
+.add-founder-name-input{
+  border-bottom: 1.5px solid black;
+  border-radius: 0;
+  text-align: left;
+  outline: none;
+}
+.add-model-input-box{
+  margin-top: 2rem;
+}
+.add-founder-jiabin-box{
+  margin-top: 0.5rem;
 }

@@ -29,34 +29,121 @@
           </Breadcrumb>
         </div>
         <div class="layout-content" :style="'height:'+height+'px;'">
-          <div class="add-tips-box">
-            dasdasdas
-          </div>
           <div class="layout-content-main add-split">
             <Split v-model="addSplit">
               <div slot="left" class="add-split-pane">
-                <Form :model="model" :label-width='80' action="" @submit.native.prevent class="add-form-box" label-position="right">
-                  <!-- 上传头图 -->
-                  <div class="add-poster">
-                    <div class="add-poster-box">
-                      <img width="100%" :src="poster?poster:'https://img.someet.cc/Fhe5L1DZvhVvUndWeN-tZ_K8r4WS'" alt="">
-                      <Upload class="posterImgButton" action="/" type="select" :before-upload="disabledUpload">
-                        <i-button class="posterUploadButton" type="info" icon="ios-cloud-upload-outline">上传文件</i-button>
-                      </Upload>
+                <Form :model="model" :label-width='80' action="" @submit.native.prevent class="add-form-box"
+                  label-position="right">
+                  <div id='posteranddetail' v-show="showPart == 'posteranddetail'">
+                    <!-- 上传头图 -->
+                    <div class="add-poster">
+                      <div class="add-poster-box">
+                        <img width="100%" :src="poster?poster:'https://img.someet.cc/Fhe5L1DZvhVvUndWeN-tZ_K8r4WS'" alt="">
+                        <Upload class="posterImgButton" action="/" type="select" :before-upload="disabledUpload">
+                          <i-button class="posterUploadButton" type="info" icon="ios-cloud-upload-outline">上传文件</i-button>
+                        </Upload>
+                      </div>
+                    </div>
+                    <!-- 标题开始 -->
+                    <div class="add-model-input-box">
+                      <Input class="add-input" v-model="model.id" maxlength="30" show-word-limit placeholder="在这里输入标题" />
+                    </div>
+                    <!-- 标题结束 -->
+                    <!-- 开头详情 -->
+                    <div class="add-model-input-box">
+                      <!-- <Input class="add-input" v-model="model.id" maxlength="30" show-word-limit placeholder="在这里输入标题" /> -->
+                      <span>这是Someet发起人admin发起的#<Input style="width:10rem;border-bottom:2px solid black;" class="add-input"
+                          v-model="model.id" placeholder="在这里输入标题" />#活动</span> <br>
+                      <span>我期待遇见<Input style="width:10rem;border-bottom:2px solid black;" class="add-input" v-model="model.id"
+                          placeholder="在这里输入标题" />的伙伴</span>
+                    </div>
+                    <!-- 开头详情 -->
+                    <!-- 活动详情 -->
+                    <div class="add-model-input-box">
+                      <div id="summernote"></div>
                     </div>
                   </div>
-                  <!-- 标题开始 -->
-                  <div class="add-model-input-box">
-                    <Input class="add-input" v-model="model.id" maxlength="30" show-word-limit placeholder="在这里输入标题" />
+                  <!-- 活动详情 -->
+                  <div id='founder' v-show="showPart == 'founder'">
+                    <div class="add-founder-box">
+                      <!-- 发起人姓名 -->
+                      <div class="add-founder-name">
+                        这是admin
+                      </div>
+                      <Row>
+                        <Col span="6">
+                        <div class="add-founder-head">
+                          <img src="https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIhH9ACDcvF0CbibwKcsKUDpqpjawia29icNNsfRhLwQiaiaXjAJ7iczrC2TnEYn78aJBxefiaCYFzA9iaK0w/132"
+                            alt="" width="100%">
+                        </div>
+                        </Col>
+                        <Col span="18">
+                        <div class="add-founder-desc">
+                          <Tag checkable color="primary">标签一</Tag>
+                          <Tag checkable color="success">标签二</Tag>
+                          <Tag checkable color="error">标签三</Tag>
+                          <Tag checkable color="warning">标签四</Tag>
+                          <Tag checkable color="primary">标签一</Tag>
+                          <Tag checkable color="success">标签二</Tag>
+                          <Tag checkable color="error">标签三</Tag>
+                          <Tag checkable color="warning">标签四</Tag>
+                          <Tag checkable color="primary">标签一</Tag>
+                          <Tag checkable color="success">标签二</Tag>
+                          <Tag checkable color="error">标签三</Tag>
+                          <Tag checkable color="warning">标签四</Tag>
+                        </div>
+                        </Col>
+                      </Row>
+                      <!-- 发起人姓名 -->
+                      <!-- 联合发起人开始 -->
+                      <div class="add-founder-name">
+                        <Checkbox v-model="co_founders.had_field8" label="twitter" @on-change="changeField8">
+                          <span style="font-size: 1.3rem;">本次活动我有联合发起人</span>
+                        </Checkbox>
+                        <Input v-show="co_founders.had_field8" class="add-founder-name-input" v-model="model.field8"
+                          placeholder="请输入联合发起人的姓名" style="width: 300px" />
+                      </div>
+                      <!-- 联合发起人结束 -->
+                      <!-- 嘉宾开始 -->
+                      <div class="add-founder-name">
+                        <Checkbox v-model="co_founders.had_field7" label="twitter" @on-change="changeField7">
+                          <span style="font-size: 1.3rem;">本次活动我有嘉宾</span>
+                        </Checkbox>
+                        <Row v-show="co_founders.had_field7">
+                          <Col span="6">
+                          <div class="add-founder-head">
+                            <img src="http://img.someet.cc/phpQJdJJ0"
+                              alt="" width="100%">
+                          </div>
+                          </Col>
+                          <Col span="18">
+                          <div class="add-founder-desc">
+                            <div>
+                              <Input class="add-founder-name-input" v-model="model.jiabin_name" placeholder="请输入嘉宾的姓名" style="width: 200px" />
+                            </div>
+                            <div class="add-founder-jiabin-box">
+                              <Input maxlength="200" v-model="model.jiabin_desc" show-word-limit type="textarea" placeholder="请输入嘉宾介绍"
+                                style="width: 300px;border:1px solid black;resize: none;" />
+                            </div>
+                          </div>
+                          </Col>
+                        </Row>
+                      </div>
+                      <!-- 嘉宾结束 -->
+                    </div>
                   </div>
-                  <!-- 标题结束 -->
-                  <!-- 开头详情 -->
                   <div class="add-model-input-box">
-                    <!-- <Input class="add-input" v-model="model.id" maxlength="30" show-word-limit placeholder="在这里输入标题" /> -->
-                     <span>这是Someet发起人admin发起的#<Input style="width:10rem;border-bottom:2px solid black;" class="add-input" v-model="model.id" placeholder="在这里输入标题" />#活动</span> <br>
-                     <span>我期待遇见<Input style="width:10rem;border-bottom:2px solid black;" class="add-input" v-model="model.id" placeholder="在这里输入标题" />的伙伴</span>
+                    <ButtonGroup>
+                      <Button size="large" type="primary" @click="changePartPre">
+                        <Icon type="ios-arrow-back" />
+                        上一页
+                      </Button>
+                      <Button size="large" type="primary" @click="changePartNext">
+                        下一页
+                        <Icon type="ios-arrow-forward" />
+                      </Button>
+                    </ButtonGroup>
                   </div>
-                  <!-- 开头详情 -->
                 </Form>
               </div>
               <div slot="right" class="add-split-pane">
@@ -99,8 +186,21 @@
     name: 'Add',
     data() {
       return {
-        model:{
-           id:''
+        showPart: 'founder',
+        co_founders: {
+          had_field8: false,
+          had_field7: false
+        }, //是否存在联合发起人
+        model: {
+          id: '',
+          title: '',
+          detail_header: '',
+          field8: '', //联合发起人
+          jiabin:{
+            jiabin_name:'',//嘉宾姓名，
+            jiabin_head:'',//嘉宾头像
+           jiabin_desc:'',//嘉宾简介
+          }
         },
         addsplitFortop: 0.3,
         addSplit: 0.7,
@@ -124,6 +224,19 @@
       }
     },
     methods: {
+      //添加联合发起人
+      changeField8(res) {
+        this.co_founders.had_field8 = res
+      },
+      changeField7(res) {
+        this.co_founders.had_field7 = res
+      },
+      changePartPre() {
+        this.showPart = 'posteranddetail'
+      },
+      changePartNext() {
+        this.showPart = 'founder'
+      },
       //菜单显示和隐藏
       toggleClick() {
         if (this.spanLeft === 5) {
@@ -203,8 +316,26 @@
       this.$nextTick(() => {
         const height = window.screen.availHeight
         // const
-        that.height = height - 250
-        // console.log(window)
+        that.height = height - 220
+        $('#summernote').summernote({
+          lang: 'zh-CN',
+          placeholder: '请输入内容',
+          height: 300,
+          width: '90%',
+          toolbar: [
+            ['style', ['bold', 'italic']],
+            ['fontsize', ['fontsize']],
+            ['insert', ['picture']],
+            ['paragraph']
+          ],
+          styleTags: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'],
+          fontSizes: ['14', '15', '17', '18', '19'],
+          callbacks: {
+            onSubmit: function() {
+              vm.richContent = $('#summernote').summernote('code')
+            }
+          }
+        })
       })
     },
     components: {
