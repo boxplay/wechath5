@@ -39,7 +39,7 @@
                     <div class="add-poster">
                       <div class="add-poster-box">
                         <img width="100%" :src="poster?poster:'https://img.someet.cc/Fhe5L1DZvhVvUndWeN-tZ_K8r4WS'" alt="">
-                        <Upload class="posterImgButton" action="/" type="select" :before-upload="disabledUpload">
+                        <Upload class="posterImgButton" action="/" type="select" :before-upload="uploadPoster">
                           <i-button class="posterUploadButton" type="info" icon="ios-cloud-upload-outline">上传文件</i-button>
                         </Upload>
                       </div>
@@ -71,13 +71,13 @@
                         这是admin
                       </div>
                       <Row>
-                        <Col span="6">
+                        <Col span="4">
                         <div class="add-founder-head">
                           <img src="https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIhH9ACDcvF0CbibwKcsKUDpqpjawia29icNNsfRhLwQiaiaXjAJ7iczrC2TnEYn78aJBxefiaCYFzA9iaK0w/132"
                             alt="" width="100%">
                         </div>
                         </Col>
-                        <Col span="18">
+                        <Col span="20">
                         <div class="add-founder-desc">
                           <Tag checkable color="primary">标签一</Tag>
                           <Tag checkable color="success">标签二</Tag>
@@ -100,6 +100,7 @@
                         <Checkbox v-model="co_founders.had_field8" label="twitter" @on-change="changeField8">
                           <span style="font-size: 1.3rem;">本次活动我有联合发起人</span>
                         </Checkbox>
+                        <br>
                         <Input v-show="co_founders.had_field8" class="add-founder-name-input" v-model="model.field8"
                           placeholder="请输入联合发起人的姓名" style="width: 300px" />
                       </div>
@@ -110,19 +111,26 @@
                           <span style="font-size: 1.3rem;">本次活动我有嘉宾</span>
                         </Checkbox>
                         <Row v-show="co_founders.had_field7">
-                          <Col span="6">
+                          <Col span="4">
                           <div class="add-founder-head">
-                            <img src="http://img.someet.cc/phpQJdJJ0"
-                              alt="" width="100%">
+                            <div class="add-founder-head-box">
+                              <img :src="model.jiabin.jiabin_head?model.jiabin.jiabin_head:'http://img.someet.cc/phpQJdJJ0'"
+                                alt="" width="100%">
+                            </div>
+                            <div class="add-founder-jiabin-head-btn">
+                              <Upload action="/" type="select" :before-upload="uploadJiabin">
+                                <i-button type="info" icon="ios-cloud-upload-outline">上传照片</i-button>
+                              </Upload>
+                            </div>
                           </div>
                           </Col>
-                          <Col span="18">
+                          <Col span="20">
                           <div class="add-founder-desc">
                             <div>
                               <Input class="add-founder-name-input" v-model="model.jiabin_name" placeholder="请输入嘉宾的姓名" style="width: 200px" />
                             </div>
                             <div class="add-founder-jiabin-box">
-                              <Input maxlength="200" v-model="model.jiabin_desc" show-word-limit type="textarea" placeholder="请输入嘉宾介绍"
+                              <Input class="add-founder-jiabin-desc" maxlength="200" v-model="model.jiabin_desc" show-word-limit type="textarea" placeholder="请输入嘉宾介绍"
                                 style="width: 300px;border:1px solid black;resize: none;" />
                             </div>
                           </div>
@@ -170,7 +178,7 @@
         <Button type="error" size="large" long :loading="modal_loading" @click="confirm">确定</Button>
       </div>
     </Modal>
-    <uploadPoster :showModal="showModal" @getImgUrl="getImgUrl" :imgRes="imgRes" :w="600" :h="450" :type="uploadType"></uploadPoster>
+    <uploadPoster :showModal="showModal" @getImgUrl="getImgUrl" :imgRes="imgRes" :w.sync="uploadBoxWidth.w" :h.sync="uploadBoxWidth.h" :type="uploadType"></uploadPoster>
   </div>
   <!-- <img :src="poster" alt="">
     <Upload action="/" type="select" :before-upload="disabledUpload">
@@ -186,6 +194,10 @@
     name: 'Add',
     data() {
       return {
+        uploadBoxWidth:{
+          w:200,
+          h:200
+        },
         showPart: 'founder',
         co_founders: {
           had_field8: false,
@@ -193,6 +205,8 @@
         }, //是否存在联合发起人
         model: {
           id: '',
+          poster:'',
+          headimgurl:'',
           title: '',
           detail_header: '',
           field8: '', //联合发起人
@@ -270,18 +284,42 @@
       },
       //获取上传组件的返回值
       getImgUrl(data) {
+        console.log(data)
         // this.poster = data
         if (data.type == 'poster') {
-          this.poster = data.url
+          this.model.poster = data.url
         } else if (data.type == 'headimgurl') {
-          this.headimgurl = data.url
+          this.model.headimgurl = data.url
+        }else if(data.type == 'jiabin'){
+          this.model.jiabin.jiabin_head = data.url
         }
         this.showModal = false
       },
-      //阻止框架默认的上传女性为，并把图片本地地址传入
-      disabledUpload(file) {
+      //阻止框架默认的上传行为，并把图片本地地址传入
+      uploadJiabin(file) {
+        console.log(file)
+        var that = this
+        this.uploadBoxWidth = {
+                   w:200,
+                   h:200
+                 }
+        this.uploadType = 'jiabin'
+        this.uploadFunc(file);
+        return false;
+      },
+      uploadPoster(file) {
+        console.log(file)
+       this.uploadBoxWidth = {
+                  w:600,
+                  h:340
+                }
         var that = this
         this.uploadType = 'poster'
+        this.uploadFunc(file);
+        return false;
+      },
+      uploadFunc(file){
+        var that = this
         // 创建一个 FileReader 对象
         let reader = new FileReader()
         // readAsDataURL 方法用于读取指定 Blob 或 File 的内容
@@ -302,8 +340,7 @@
           that.imgRes = data
           that.showModal = true
         }
-        return false;
-      },
+      }
     },
     filters: {
       formatDate(time) {

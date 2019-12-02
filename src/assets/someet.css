@@ -130,7 +130,7 @@
   min-width: 100px;
   margin: 1rem;
 }
-.add-founder-head{
+.add-founder-head,.add-founder-head-box{
   height: 100px;
   width: 100px;
 }
@@ -145,4 +145,11 @@
 }
 .add-founder-jiabin-box{
   margin-top: 0.5rem;
+}
+.add-founder-jiabin-desc{
+  height: 80px;
+}
+.add-founder-jiabin-head-btn{
+  margin-left: -5px;
+  margin-top: 8px;
 }

@@ -21,7 +21,7 @@
         <div class="uploadBox-cut">
           <vueCropper ref="cropper" :img="option.img?option.img:imgRes" :outputSize="option.size" :outputType="option.outputType" :info="true"
             :full="option.full" :canMove="option.canMove" :canMoveBox="option.canMoveBox" :original="option.original"
-            :autoCrop="option.autoCrop" :autoCropWidth="option.autoCropWidth" :autoCropHeight="option.autoCropHeight"
+            :autoCrop="option.autoCrop" :autoCropWidth="w" :autoCropHeight="h"
             :fixedBox="option.fixedBox"></vueCropper>
         </div>
       </div>
